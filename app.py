@@ -116,6 +116,9 @@ GRZYBY = [
      "look_alikes": "Smardz (jadalny)"},
 ]
 
+
+IMAGES = {1: ['https://commons.wikimedia.org/wiki/Special:FilePath/Boletus_edulis_Etgholl.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Boletus_edulis_HR.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Boletus_edulis_Cross_section.jpg?width=640'], 2: ['https://commons.wikimedia.org/wiki/Special:FilePath/Imleria_badia_2010_G1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Xerocomus_badius_2.jpg?width=640'], 3: ['https://commons.wikimedia.org/wiki/Special:FilePath/Cantharellus_cibarius_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Cantharellus_cibarius.jpg?width=640'], 4: ['https://commons.wikimedia.org/wiki/Special:FilePath/Suillus_luteus_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Suillus_luteus_JPG1.jpg?width=640'], 5: ['https://commons.wikimedia.org/wiki/Special:FilePath/Macrolepiota_procera_2010_G1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Macrolepiota_procera_-_Lindsey.jpg?width=640'], 6: ['https://commons.wikimedia.org/wiki/Special:FilePath/Leccinum_scabrum_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Leccinum_scabrum.jpg?width=640'], 7: ['https://commons.wikimedia.org/wiki/Special:FilePath/Leccinum_aurantiacum_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Leccinum_aurantiacum.jpg?width=640'], 8: ['https://commons.wikimedia.org/wiki/Special:FilePath/Lactarius_deliciosus_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Lactarius_deliciosus.jpg?width=640'], 9: ['https://commons.wikimedia.org/wiki/Special:FilePath/Armillaria_mellea_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Armillaria_mellea_HR.jpg?width=640'], 16: ['https://commons.wikimedia.org/wiki/Special:FilePath/Tylopilus_felleus_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Tylopilus_felleus.jpg?width=640'], 18: ['https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_muscaria_3_vliegenzwammen_op_rij.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_muscaria_(fly_agaric).jpg?width=640'], 19: ['https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_pantherina_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_pantherina.jpg?width=640'], 22: ['https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_phalloides_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_phalloides.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_phalloides_volva.jpg?width=640'], 23: ['https://commons.wikimedia.org/wiki/Special:FilePath/Amanita_virosa_1.jpg?width=640'], 26: ['https://commons.wikimedia.org/wiki/Special:FilePath/Gyromitra_esculenta_1.jpg?width=640', 'https://commons.wikimedia.org/wiki/Special:FilePath/Gyromitra_esculenta.jpg?width=640']}
+
 STATUS_LABELS = {
     "jadalny": ("Jadalny", "🟢"),
     "niejadalny": ("Niejadalny", "🟠"),
@@ -202,6 +205,17 @@ def show_grzyb_detail(g):
     st.markdown(f"## {g['nazwa_polska']}")
     st.markdown(f"*{g['nazwa_lacinska']}*")
     st.markdown(status_badge(g["status"]), unsafe_allow_html=True)
+    # Zdjęcia do porównania
+    imgs = IMAGES.get(g["id"], [])
+    if imgs:
+        st.markdown("**Zdjęcia (do porównania):**")
+        cols = st.columns(min(len(imgs), 3))
+        for i, url in enumerate(imgs[:3]):
+            with cols[i]:
+                try:
+                    st.image(url, use_container_width=True, caption=f"Zdjęcie {i+1}")
+                except Exception:
+                    st.caption("Nie udało się załadować zdjęcia")
     st.markdown("---")
     st.markdown(f"**Opis**  \n{g['opis']}")
     st.markdown(f"**Siedlisko**  \n{g['siedlisko']}")
@@ -309,6 +323,15 @@ elif page == "📚 Atlas":
         label, emoji = STATUS_LABELS.get(g["status"], (g["status"], ""))
         with st.expander(f"{emoji} **{g['nazwa_polska']}** — *{g['nazwa_lacinska']}*"):
             st.markdown(status_badge(g["status"]), unsafe_allow_html=True)
+            imgs = IMAGES.get(g["id"], [])
+            if imgs:
+                cols = st.columns(min(len(imgs), 3))
+                for i, url in enumerate(imgs[:3]):
+                    with cols[i]:
+                        try:
+                            st.image(url, use_container_width=True)
+                        except Exception:
+                            pass
             st.markdown(f"**Opis**  \n{g['opis']}")
             st.markdown(f"**Siedlisko**  \n{g['siedlisko']}")
             st.markdown(f"**Sezon**  \n{g['sezon']}")
