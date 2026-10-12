@@ -1,16 +1,23 @@
-# Atlas Grzybów (Streamlit)
+# Atlas Grzybów (Streamlit + AI)
 
-Aplikacja webowa do rozpoznawania grzybów – atlas + skaner zdjęć.
-
-Działa online (Streamlit Community Cloud) lub lokalnie.
+Aplikacja webowa do rozpoznawania grzybów – rozbudowany atlas polskich gatunków + skaner AI.
 
 ## Ważne ostrzeżenie
 
 **NIGDY nie jedz grzyba tylko na podstawie wyniku aplikacji.**
 
-Identyfikacja nigdy nie jest w 100% pewna.  
+Identyfikacja AI nigdy nie jest w 100% pewna.  
 Muchomor sromotnikowy i inne śmiertelnie trujące gatunki mogą być pomylone.  
 W razie jakichkolwiek wątpliwości – **nie zbieraj**.
+
+## Funkcje
+
+- **26 gatunków** typowych dla Polski (jadalne, niejadalne, trujące, śmiertelnie trujące)
+- Skaner AI (model Hugging Face: `dima806/mushrooms_image_detection`)
+- Atlas z wyszukiwarką i filtrem statusu
+- Look-alike (podobne gatunki)
+- Silne ostrzeżenia bezpieczeństwa
+- Tryb demo gdy model się nie załaduje
 
 ## Uruchomienie lokalne
 
@@ -23,19 +30,12 @@ streamlit run app.py
 
 ## Wdrożenie na Streamlit Cloud
 
-1. Wrzuć kod na GitHub (publiczne repozytorium).
-2. Wejdź na [share.streamlit.io](https://share.streamlit.io).
-3. Połącz konto GitHub.
-4. Wybierz repozytorium → plik `app.py`.
-5. Kliknij **Deploy**.
+1. Wrzuć kod na publiczne repozytorium GitHub.
+2. Wejdź na https://share.streamlit.io
+3. New app → wybierz repozytorium → plik `app.py`
+4. Deploy
 
-## Funkcje
-
-- Atlas gatunków z wyszukiwarką
-- Skaner (upload zdjęcia lub aparat)
-- Status jadalności + look-alike
-- Silne ostrzeżenia bezpieczeństwa
-- Tryb demo (bez modelu AI)
+**Uwaga:** Pierwsze uruchomienie na Cloud może potrwać dłużej (pobieranie modelu torch + transformers).
 
 ## Licencja
 
